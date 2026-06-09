@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    is2FAEnabled: {
+    isMFAEnabled: {
       type: Boolean,
       default: false,
     },

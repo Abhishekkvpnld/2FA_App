@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "passport";
 import dbConnect from "./config/dbConnection.js";
 import userRoutes from "./routes/userRoute.js";
+import "./config/passportConfig.js";
 
 dotenv.config();
 
