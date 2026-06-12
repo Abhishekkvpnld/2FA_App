@@ -7,7 +7,9 @@ import qrcode from "qrcode";
 //Register
 export const registerUser = async (req, res) => {
   try {
+
     const { username, password } = req.body;
+
     // user registration logic
     const hashePassword = await bcrypt.hash(password, 10);
     const newUser = new User({
@@ -44,23 +46,41 @@ export const loginUser = async (req, res) => {
 
 // Logout
 export const logoutUser = async (req, res) => {
-  if (!req.user) {
-    res.status(401).json({
-      message: "Unauthorized user",
-    });
+  console.log("Logout req.user is:", req.user);
 
-    req.logout((err) => {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      message: "User is not logged in",
+    });
+  }
+
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to logout user",
+      });
+    }
+
+    req.session.destroy((err) => {
       if (err) {
-        return res.status(400).json({
-          message: "User not logged in",
+        return res.status(500).json({
+          success: false,
+          message: "Failed to destroy session",
         });
       }
 
-      res.status(200).json({
+      res.clearCookie("connect.sid");
+
+      console.log("✅ User logged out successfully");
+
+      return res.status(200).json({
+        success: true,
         message: "User logged out successfully",
       });
     });
-  }
+  });
 };
 
 // Auth status
@@ -102,7 +122,7 @@ export const TwoFASetup = async (req, res) => {
     });
 
     const qrImageUrl = await qrcode.toDataURL(url);
- 
+
     res.status(200).json({
       error: false,
       success: true,
