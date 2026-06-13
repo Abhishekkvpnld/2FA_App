@@ -4,6 +4,9 @@ import {
   loginUser,
   logoutUser,
   registerUser,
+  reset2FA,
+  TwoFASetup,
+  verify2FA,
 } from "../controllers/userController.js";
 import passport from "passport";
 import { checkAuth } from "../middlewares/checkAuth.js";
@@ -23,8 +26,12 @@ router.post("/logout", checkAuth, logoutUser);
 router.get("/status", checkAuth, authStatus);
 
 // 2FA setup route
-router.post("/2fa/setup",checkAuth, )
+router.post("/2fa/setup", checkAuth, TwoFASetup);
+
 // 2FA verify route
+router.post("/2fa/verify", checkAuth, verify2FA);
+
 // 2FA reset route
+router.post("/2fa/reset", checkAuth, reset2FA);
 
 export default router;

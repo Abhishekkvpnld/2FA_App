@@ -7,7 +7,6 @@ import qrcode from "qrcode";
 //Register
 export const registerUser = async (req, res) => {
   try {
-
     const { username, password } = req.body;
 
     // user registration logic
@@ -143,6 +142,34 @@ export const TwoFASetup = async (req, res) => {
 // 2FA verify
 export const verify2FA = async (req, res) => {
   try {
+    const { token } = req.body;
+    const user = req.user;
+
+    const Isverified = speakeasy.totp.verify({
+      secret: user.twoFactorSecret,
+      encoding: "base64",
+      token,
+    });
+
+    if (Isverified) {
+      const jwtToken = jwt.sign(
+        { username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" },
+      );
+      res.status(200).json({
+        error: false,
+        success: true,
+        message: "2FA verification successful",
+        token: jwtToken,
+      });
+    } else {
+      res.status(400).json({
+        error: true,
+        success: false,
+        message: "Invalid 2FA token",
+      });
+    }
   } catch (err) {
     res.status(500).json({
       error: true,
@@ -156,6 +183,17 @@ export const verify2FA = async (req, res) => {
 // 2FA reset
 export const reset2FA = async (req, res) => {
   try {
+    const user = req.user;
+    user.twoFactorSecret = null;
+    user.isMFAEnabled = false;
+
+    await user.save();
+
+    res.status(200).json({
+      error: false,
+      success: true,
+      message: "2FA reset successful",
+    }); 
   } catch (err) {
     res.status(500).json({
       error: true,
