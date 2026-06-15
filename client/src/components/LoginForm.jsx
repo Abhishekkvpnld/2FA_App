@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { loginUser } from "../services/authApi";
 
 const LoginForm = () => {
   const [isRegistered, setIsRegistered] = useState(true);
@@ -9,17 +10,36 @@ const LoginForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-
     // Login API call
+    try {
+      const response = await loginUser(email, password);
+      setMessage(response?.data?.message);
+      setError("");
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      setUsername("");
+      setPassword("");
+      setError(error.response?.data?.message || "An error occurred during login.");
+      setMessage("");
+    }
+
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     // Register API call
+    try {
+      const response = await registerUser(email, password);
+      setMessage(response?.data?.message);
+      setError("");
+    } catch (error) {
+      setError(error.message);
+      setMessage("");
+    }
   };
 
   return (
