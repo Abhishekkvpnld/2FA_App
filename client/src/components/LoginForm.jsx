@@ -5,7 +5,7 @@ const LoginForm = () => {
   const [isRegistered, setIsRegistered] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [email, setEmail] = useState("");
+  const [username,setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -14,15 +14,15 @@ const LoginForm = () => {
     e.preventDefault();
     // Login API call
     try {
-      const response = await loginUser(email, password);
-      setMessage(response?.data?.message);
+      const response = await loginUser(username, password);
+      setMessage(response?.message);
       setError("");
       setUsername("");
       setPassword("");
     } catch (error) {
       setUsername("");
       setPassword("");
-      setError(error.response?.data?.message || "An error occurred during login.");
+      setError(error?.response?.data?.message || "An error occurred during login.");
       setMessage("");
     }
 
@@ -63,15 +63,15 @@ const LoginForm = () => {
         >
           <div>
             <label className="block text-sm font-medium mb-2">
-              Email Address
+              Username
             </label>
 
             <input
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="john@example.com"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              type="text"
+              placeholder="john"
               className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

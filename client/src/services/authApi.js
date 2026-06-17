@@ -14,7 +14,7 @@ export const loginUser = async (username, password) => {
     const response = await api.post(
       "/auth/login",
       { username, password },
-      { withcredentials: true },
+      { withCredentials: true },
     );
     return response.data;
   } catch (error) {
@@ -27,7 +27,7 @@ export const authStatus = async () => {
   try {
     const response = await api.get(
       "/auth/status",
-      { withcredentials: true }
+      { withCredentials: true }
     );
     return response?.data;
   } catch (error) {
@@ -41,7 +41,7 @@ export const logout = async () => {
     const response = await api.post(
       "/auth/logout",
       {},
-      { withcredentials: true }
+      { withCredentials: true }
     );
     return response?.data;
   } catch (error) {
@@ -55,7 +55,7 @@ export const setup2FA = async () => {
     const response = await api.post(
       "/auth/2fa/setup",
       {},
-      { withcredentials: true }
+      { withCredentials: true }
     );
     return response?.data;
   } catch (error) {
@@ -70,7 +70,7 @@ export const verify2FA = async (token) => {
     const response = await api.post(
       "/auth/2fa/verify",
       { token },
-      { withcredentials: true }
+      { withCredentials: true }
     );
     return response?.data;
   } catch (error) {
@@ -84,7 +84,7 @@ export const reset2FA = async () => {
     const response = await api.post(
       "/auth/2fa/reset",
       {},
-      { withcredentials: true }
+      { withCredentials: true }
     );
     return response?.data;
   } catch (error) {
