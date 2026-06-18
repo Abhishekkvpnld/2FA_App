@@ -1,25 +1,17 @@
 import api from "./api.js";
 
 export const registerUser = async (username, password) => {
-  try {
     const response = await api.post("/auth/register", { username, password });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+    return response?.data;
 };
 
 export const loginUser = async (username, password) => {
-  try {
     const response = await api.post(
       "/auth/login",
       { username, password },
       { withCredentials: true },
     );
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 

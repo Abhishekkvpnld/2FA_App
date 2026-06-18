@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { loginUser } from "../services/authApi";
+import { loginUser, registerUser } from "../services/authApi";
 
 const LoginForm = () => {
   const [isRegistered, setIsRegistered] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [username,setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -33,11 +33,19 @@ const LoginForm = () => {
 
     // Register API call
     try {
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match");
+      }
+
       const response = await registerUser(email, password);
-      setMessage(response?.data?.message);
+      setMessage(response?.message);
       setError("");
     } catch (error) {
-      setError(error.message);
+      setError(
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong"
+      );
       setMessage("");
     }
   };
