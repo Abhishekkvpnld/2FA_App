@@ -9,6 +9,11 @@ export const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    const checkUser = await User.find({username:username});
+    if(checkUser){
+      throw new Error("User already exist..!")
+    }
+
     // user registration logic
     const hashePassword = await bcrypt.hash(password, 10);
     const newUser = new User({
@@ -34,12 +39,13 @@ export const registerUser = async (req, res) => {
 
 // Login
 export const loginUser = async (req, res) => {
+
   res.status(200).json({
     error: false,
     success: true,
     message: "User logged in successfully",
-    isMFAEnabled: req.user.isMFAEnabled,
-    username: req.user.username,
+    // isMFAEnabled: req.user.isMFAEnabled,
+    // username: req.user.username,
   });
 };
 

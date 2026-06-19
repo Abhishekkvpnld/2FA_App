@@ -5,8 +5,8 @@ const LoginForm = () => {
   const [isRegistered, setIsRegistered] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("abhishek");
+  const [password, setPassword] = useState("123456");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
@@ -37,7 +37,7 @@ const LoginForm = () => {
         throw new Error("Passwords do not match");
       }
 
-      const response = await registerUser(email, password);
+      const response = await registerUser(username, password);
       setMessage(response?.message);
       setError("");
     } catch (error) {
@@ -75,7 +75,7 @@ const LoginForm = () => {
             </label>
 
             <input
-              name="email"
+              name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               type="text"
