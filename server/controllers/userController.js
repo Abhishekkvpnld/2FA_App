@@ -9,9 +9,9 @@ export const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const checkUser = await User.find({username:username});
-    if(checkUser){
-      throw new Error("User already exist..!")
+    const checkUser = await User.find({ username: username });
+    if (checkUser) {
+      throw new Error("User already exist..!");
     }
 
     // user registration logic
@@ -39,13 +39,16 @@ export const registerUser = async (req, res) => {
 
 // Login
 export const loginUser = async (req, res) => {
+  console.log(req.user);
 
   res.status(200).json({
     error: false,
     success: true,
     message: "User logged in successfully",
-    // isMFAEnabled: req.user.isMFAEnabled,
-    // username: req.user.username,
+    user: {
+      isMFAEnabled: req.user.isMFAEnabled,
+      username: req.user.username,
+    },
   });
 };
 
@@ -199,7 +202,7 @@ export const reset2FA = async (req, res) => {
       error: false,
       success: true,
       message: "2FA reset successful",
-    }); 
+    });
   } catch (err) {
     res.status(500).json({
       error: true,

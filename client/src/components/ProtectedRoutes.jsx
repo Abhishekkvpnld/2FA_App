@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useSession } from "../context/sessionContext";
 
 const ProtectedRoutes = () => {
-  const isLoggedin = true;
+  const { isLoggedIn } = useSession();
 
-  return isLoggedin ? <Outlet/> : <Navigate to="/login" />;
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default ProtectedRoutes;

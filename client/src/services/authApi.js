@@ -11,6 +11,8 @@ export const loginUser = async (username, password) => {
       { username, password },
       { withCredentials: true },
     );
+
+    console.log(response.data)
     return response.data;
 };
 
