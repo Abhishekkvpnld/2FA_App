@@ -45,16 +45,12 @@ export const logout = async () => {
 
 
 export const setup2FA = async () => {
-  try {
     const response = await api.post(
       "/auth/2fa/setup",
       {},
       { withCredentials: true }
     );
     return response?.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 

@@ -3,8 +3,8 @@ import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import TwoFAVerification from "./components/TwoFAVerification";
-import TwoFASetup from "./components/TwoFASetup";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Setup2FA from "./pages/Setup2FA";
 
 
 
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/setup-2fa",
-                element: <TwoFASetup />,
+                element: <Setup2FA />,
                 errorElement: <ErrorPage />
             },
         ]

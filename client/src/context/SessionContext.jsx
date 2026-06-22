@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const SessionContext = createContext();
 
@@ -9,15 +9,28 @@ export const useSession = () => {
 export const SessionProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+      setIsLoggedIn(true)
+    }
+    setLoading(false)
+  }, []);
 
   const login = (userData) => {
     setIsLoggedIn(true);
     setUser(userData);
+    sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    sessionStorage.removeItem("user");
+
   };
 
   return (
@@ -27,6 +40,7 @@ export const SessionProvider = ({ children }) => {
         user,
         login,
         logout,
+        loading
       }}
     >
       {children}

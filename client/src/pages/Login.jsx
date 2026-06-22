@@ -13,11 +13,11 @@ const Login = () => {
     login(userData);
 
     // MFA routing
-    // if (!userData?.isMFAEnabled) {
-    //   navigate("/setup-2fa");
-    // } else {
-    //   navigate("/verify-2fa");
-    // }
+    if (!userData?.isMFAEnabled) {
+      navigate("/setup-2fa");
+    } else {
+      navigate("/verify-2fa");
+    }
   };
 
   return (

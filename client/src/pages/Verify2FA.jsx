@@ -2,7 +2,7 @@ import React from 'react'
 
 const Verify2FA = () => {
   return (
-    <div>Verify2FA</div>
+    <div className='bg-red-400'>Verify2FA</div>
   )
 }
 

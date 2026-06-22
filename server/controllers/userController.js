@@ -114,7 +114,6 @@ export const authStatus = async (req, res) => {
 export const TwoFASetup = async (req, res) => {
   try {
     const user = req.user;
-    console.log("req.user is", user);
     const secret = speakeasy.generateSecret();
 
     user.twoFactorSecret = secret.base32;
