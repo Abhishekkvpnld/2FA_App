@@ -47,15 +47,55 @@ const TwoFASetup = ({ onSetupComplete }) => {
           </div>
 
           {/* QR Code */}
+          {/* QR Code */}
           <div className="flex justify-center mb-6">
             <div className="w-48 h-48 rounded-2xl border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
-              <img
-                src={response?.qrCode}
-                alt="2FA QR Code"
-                className="w-full h-full object-contain p-2"
-              />
+              {response?.qrCode ? (
+                <img
+                  src={response.qrCode}
+                  alt="2FA QR Code"
+                  className="w-full h-full object-contain p-2"
+                />
+              ) : (
+                <p className="text-gray-400 text-sm">Loading QR Code...</p>
+              )}
             </div>
           </div>
+
+          {/* Secret Key */}
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Manual Setup Key
+            </label>
+
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={response?.secret || ""}
+                readOnly
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-xl bg-gray-50 text-gray-700 text-sm focus:outline-none"
+              />
+
+              <button
+                type="button"
+                onClick={copyClipboard}
+                className="px-4 py-2 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition"
+              >
+                Copy
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-500 mt-2">
+              If you can't scan the QR code, enter this secret key manually in your authenticator app.
+            </p>
+          </div>
+
+          {/* Success/Error Message */}
+          {message && (
+            <div className="mb-4 p-3 rounded-xl bg-green-50 border border-green-200">
+              <p className="text-sm text-green-700">{message}</p>
+            </div>
+          )}
 
           {/* Instructions */}
           <div className="bg-blue-50 rounded-xl p-3 mb-5">

@@ -30,7 +30,7 @@ export const authStatus = async () => {
 };
 
 
-export const logout = async () => {
+export const logoutUser = async () => {
   try {
     const response = await api.post(
       "/auth/logout",
@@ -56,16 +56,12 @@ export const setup2FA = async () => {
 
 
 export const verify2FA = async (token) => {
-  try {
     const response = await api.post(
       "/auth/2fa/verify",
       { token },
       { withCredentials: true }
     );
     return response?.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 

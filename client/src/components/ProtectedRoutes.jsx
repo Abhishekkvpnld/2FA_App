@@ -4,6 +4,9 @@ import { useSession } from "../context/sessionContext";
 const ProtectedRoutes = () => {
   const { isLoggedIn, loading } = useSession();
 
+
+  console.log(loading,"❌❌❌❌")
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100">

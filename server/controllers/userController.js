@@ -65,18 +65,12 @@ export const logoutUser = async (req, res) => {
 
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to logout user",
-      });
+      return next(err);
     }
 
     req.session.destroy((err) => {
       if (err) {
-        return res.status(500).json({
-          success: false,
-          message: "Failed to destroy session",
-        });
+        return next(err)
       }
 
       res.clearCookie("connect.sid");
